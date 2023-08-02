@@ -1,0 +1,57 @@
+<br><br><fieldset class="fieldset create account" data-hasrequired="<?php /* @escapeNotVerified */
+														echo __('* Required Fields') ?>">
+	<legend class="legend">
+		<span>
+			<?php
+			/* @escapeNotVerified */
+			echo __('Profile Image')
+			?>
+		</span>
+	</legend>
+
+	<div class="field customer_image required">
+		<label for="customer_image" class="label"><span><?= __('customer_image') ?></span></label>
+		<div class="control">
+			<input type="file" id="customer_image" name="customer_image" value="<?php echo $block->getFileName(); ?>" class="validate-file" accept=".jpg, .jpeg, .png, .gif" />
+			<div class="file-uploader-preview">
+				<a class="preview-link preview-image" target="_blank">
+					<?php
+					if ($url = $block->getFileUrl()) : ?>
+						<div class="field">
+							<img id="img-customer_image" src="<?php echo $url; ?>" width="150" height="200" alt="<?php echo $block->getFileName(); ?>">
+							<input type="hidden" name="oldImageName" value="<?php echo $block->getFileName(); ?>"/>
+						</div>
+					<?php else: ?>	
+						<img id="img-customer_image" alt="<?= __('customer_image') ?>" class="mgz-cusrattr-image-preview">
+					<?php endif; ?>
+				
+				</a>
+			</div>
+		</div>
+	</div>
+</fieldset>
+
+<script type="text/javascript">
+	require(['jquery'], function($) {
+		$('#customer_image').on('change', function() {
+			if (this.files && this.files[0]) {
+				var id = '#img-customer_image';
+				var img = document.querySelector(id);
+				img.src = URL.createObjectURL(this.files[0]);
+				img.href = URL.createObjectURL(this.files[0]);
+				$('#img-customer_image').attr('href', URL.createObjectURL(this.files[0]));
+				img.alt = this.files[0].name;
+				$(this).parent().children('.file-uploader-preview').addClass('mediaReview');
+			}
+		});
+	})
+</script>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Kinex_CustomerAttr/js/editPost": {
+                "AjaxUrl": "custom/index"
+            }
+        }
+    }
+</script>
